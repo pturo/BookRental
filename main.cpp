@@ -22,6 +22,7 @@ public:
     void show();
     void edit();
     int search(char[], char[]);
+    int deletebook(char[], char[]);
     void buy();
 };
 
@@ -73,6 +74,22 @@ int book::search(char titl[30], char auth[30])
         return 0;
 }
 
+int book::deletebook(char titl[30], char auth[30])
+{
+    if (strcmp(titl, title) == 0 && strcmp(auth, author) == 0) {
+        author = new char[30];
+        title = new char[30];
+        publisher = new char[30];
+        price = new float;
+        stock = new int;
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 void book::buy()
 {
     int count;
@@ -104,7 +121,8 @@ int main()
         std::cout << "\n\t2. Search for book";
         std::cout << "\n\t3. Edit details of book";
         std::cout << "\n\t4. Buy book";
-        std::cout << "\n\t5. Exit program";
+        std::cout << "\n\t5. Delete book";
+        std::cout << "\n\t6. Exit program";
         std::cout << "\n> ";
         std::cin >> choice;
         switch (choice)
@@ -174,6 +192,26 @@ int main()
             }
             break;
         case 5:
+            std::cin.ignore();
+            std::cout << "Enter title: ";
+            std::cin.getline(title, 30);
+            std::cout << "Enter author: ";
+            std::cin.getline(author, 30);
+            for (t = 0; t < i; t++)
+            {
+                if (books[t]->search(title, author))
+                {
+                    books[t]->deletebook(title, author);
+                    std::cout << "\nBook deleted successfully!" << std::endl;
+                    break;
+                }
+            }
+            if (t == i)
+            {
+                std::cout << "\nThere is not a book you are looking for!" << std::endl;
+            }
+            break;
+        case 6:
             std::cout << "BYEBYE!" << std::endl;
             exit(0);
             break;
